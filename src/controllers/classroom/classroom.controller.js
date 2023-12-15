@@ -1,5 +1,6 @@
 import {client} from '../../database/database.js';
 
+// Isaac
 const getClassroom = async (req, res) => {
     try {
         const response = await client.query("SELECT * FROM classroom ");
