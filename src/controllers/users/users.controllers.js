@@ -21,6 +21,8 @@ const getUsers = async (req, res) => {
     }
 }
 
+// Comment for Mario Salazar
+
 export {
     getUsers
 }
