@@ -11,7 +11,7 @@ const options = {
             description: 'API for UTN Backend'
         },
     },
-    apis: ['src/routes/classroom.routes.js', 'src/routes/events.routes.js', 'src/routes/login.routes.js', 'src/routes/users.routes.js', 'src/database.js'],
+    apis: ['src/routes/classroom.routes.js', 'src/routes/events.routes.js', 'src/routes/login.routes.js', 'src/routes/users.routes.js', 'src/database.js' , 'src/routes/auditing.routes.js'],
 };
 
 const swaggerSpecs = swaggerJSDoc(options);
