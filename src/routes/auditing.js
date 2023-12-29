@@ -1,9 +1,7 @@
-import { Router } from "express";
-const router_auditing = Router();
+import { Router } from 'express';
+import { getAuditing, getAuditingById } from '../controllers/auditing.controller.js';
 
-
-import { getAuditing,getAuditingById} from "../controllers/auditing/auditing.controller.js";
-// Routes auditing
+const auditingRouter = Router();
 /**
  * @openapi
  * /utnbackend/v1/auditing:
@@ -26,7 +24,7 @@ import { getAuditing,getAuditingById} from "../controllers/auditing/auditing.con
  *                   items: 
  *                     type: object
  */
-router_auditing.get('/utnbackend/v1/auditing/', getAuditing);
+auditingRouter.get('/', getAuditing);
 /**
  * @openapi
  * /utnbackend/v1/auditing/{id}:
@@ -57,6 +55,6 @@ router_auditing.get('/utnbackend/v1/auditing/', getAuditing);
  *                     type: object
  * 
  */
-router_auditing.get('/utnbackend/v1/auditing/:id', getAuditingById);
+auditingRouter.get('/:id', getAuditingById);
 
-export { router_auditing };
+export { auditingRouter };

@@ -1,22 +1,69 @@
-import express from 'express';
-import {router} from './routes/classroom.routes.js';
-import {router_users} from './routes/users.routes.js';
-import {router_auditing} from './routes/auditing.routes.js'
-import {swaggerDocs as V1SwaggerDocs} from './routes/swagger.js';
+import express from "express";
+import session from "express-session";
+import cors from "cors";
+import passport from "passport";
+import {loginRouter} from "./routes/microsoft.js";
+import {usersRouter} from "./routes/users.js";
+import {rolesRouter} from "./routes/roles.js";
+import {modulesRouter} from "./routes/modules.js";
+import {assignments_modulesRouter} from "./routes/assignments_modules.js";
+import {eventsRouter} from "./routes/events.js";
+import {assignments_eventsRouter} from "./routes/assignments_events.js";
+import {classroomRouter} from "./routes/classroom.js";
+import {assignments_classRouter} from "./routes/assignments_class.js";
+import {class_scoreRouter} from "./routes/class_score.js";
+import {auditingRouter} from "./routes/auditing.js";
+import "./middlewares/microsoft.js";
+import {authorize} from "./middlewares/verifyAccess.js";
+import {swaggerDocs as V1SwaggerDocs} from "./routes/swagger.js";
 
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
-const app = express()
-//middlewares
-app.use(express.json())
+const app = express();
+app.use(express.json());
 app.use(express.urlencoded({extended: false}))
-//swagger
-V1SwaggerDocs(app, PORT);
-//routes
-app.use("/", router);
-app.use("/", router_users);
-app.use("/", router_auditing);
-app.listen(PORT, () => {
-    console.log(`Server on port ${PORT}`);
+app.use(cors());
+
+app.use(
+    session({
+        secret: '$serverbackutn',
+        resave: true,
+        saveUninitialized: true,
+        cookie: {
+            secure: false, // Cambiar a true si estás usando HTTPS
+            maxAge: 24 * 60 * 60 * 1000, // Tiempo de vida de la sesión en milisegundos
+        },
+    })
+);
+
+app.use(passport.initialize());
+app.use(passport.session());
+
+app.use("/auth", loginRouter);
+
+//Hola mundo en el servidor de bienvenida 
+app.get('/', (req, res) => {
+    res.send(`Hola mundo es una API de Login`);
 });
-console.log("Server on port 3000")
+
+//swagger
+V1SwaggerDocs(app, port);
+
+app.use('/utnbackend/v1/users', usersRouter);
+app.use('/utnbackend/v1/roles', rolesRouter);
+app.use('/utnbackend/v1/modules', modulesRouter);
+app.use('/utnbackend/v1/assignments_modules', assignments_modulesRouter);
+app.use('/utnbackend/v1/events', eventsRouter);
+app.use('/utnbackend/v1/assignments_events', assignments_eventsRouter);
+app.use('/utnbackend/v1/classroom', classroomRouter);
+app.use('/utnbackend/v1/assignments_class', assignments_classRouter);
+app.use('/utnbackend/v1/class_score', class_scoreRouter);
+app.use('/utnbackend/v1/auditing', auditingRouter);
+//app.use('/utnbackend/v1/assignments_modules', authorize(['Administrador'], ['Assignments_Modules']), assignments_modulesRouter);
+
+app.listen(port, () => {
+    console.log(`Escuchando en el puerto: http://localhost:${port}`);
+
+});
+
+

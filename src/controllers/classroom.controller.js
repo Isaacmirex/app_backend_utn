@@ -1,4 +1,4 @@
-import {client} from '../../database/database.js';
+import {client} from '../database/database.js';
 
 // Isaac
 const getClassroom = async (req, res) => {

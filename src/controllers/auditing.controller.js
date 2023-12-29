@@ -1,5 +1,5 @@
 // Importa el cliente de la base de datos
-import { client } from '../../database/database.js';
+import { client } from '../database/database.js';
 
 // Función para obtener todos los registros de la tabla auditing
 const getAuditing = async (req, res) => {
