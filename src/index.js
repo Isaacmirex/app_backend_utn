@@ -38,7 +38,6 @@ app.use(
 
 app.use(passport.initialize());
 app.use(passport.session());
-
 app.use("/auth", loginRouter);
 
 //Hola mundo en el servidor de bienvenida 

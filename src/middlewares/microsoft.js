@@ -58,11 +58,8 @@ passport.use(
     }, async function (req, accessToken, refreshToken, profile, done) {
         try {
             done(null, {profile, accessToken, refreshToken})
-            //console.log('token:', accessToken);
-            // Consultar el usuario por su user_code
             const userQueryResult = await client.query('SELECT * FROM users WHERE user_code = $1', [profile.id]);
             let userFromDB;
-
             if (userQueryResult.rows.length > 0) {
                 // Si el usuario ya existe en la base de datos, obtener el primer resultado
                 userFromDB = userQueryResult.rows[0];
@@ -104,8 +101,7 @@ passport.use(
             }*/
 
             // Llamar a la función done para indicar que la autenticación fue exitosa
-            done(null, profile);
-
+            // done(null, profile);
         } catch (error) {
             console.error("Error al autenticar al usuario", error);
             done(error, null);

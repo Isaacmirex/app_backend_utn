@@ -11,8 +11,9 @@ loginRouter.use(passport.initialize());
 
 
 loginRouter.get('/microsoft', (req, res, next) => {
+    const origin = req.get('Origin') || req.get('Referer');
+    req.session.origin = origin;
     passport.authenticate('auth-microsoft', {prompt: 'select_account', session: false}, (err, user, info) => {
-        console.log("Mario Salazar: " + user)
         if (err || !user) {
             return res.status(401).json({message: 'Authentication failed'});
         }
@@ -24,6 +25,8 @@ loginRouter.get('/microsoft/callback', passport.authenticate("auth-microsoft", {
     failureRedirect: '/auth/microsoft',
     session: false
 }), (req, res) => {
+
+    var origin_domain = req.session.origin
     try {
         const token = req.user.refreshToken.access_token;
         console.log(token)
@@ -34,7 +37,7 @@ loginRouter.get('/microsoft/callback', passport.authenticate("auth-microsoft", {
       <body>
       </body>
       <script>
-        window.opener.postMessage(${userString}, 'http://localhost:5173')
+        window.opener.postMessage(${userString}, '${origin_domain}')
       </script>
     </html>
         `)
