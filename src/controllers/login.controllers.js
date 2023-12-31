@@ -1,7 +1,30 @@
 import {client} from '../database/database.js';
 import {ComparePasswords} from '../utils/encrypt.js';
 import jwt from 'jsonwebtoken';
-import {serialize} from 'cookie';
+import {cipherPassword} from '../utils/encrypt.js';
+
+const getUserById = async (user_id) => {
+    try {
+        if (!user_id) {
+            return "Please, enter the username or email address!";
+        }
+        return new Promise((resolve, reject) => {
+            client.query("SELECT * FROM users WHERE user_id = $1;", [user_id], (error, data) => {
+                if (error) {
+                    reject(null);
+                } else {
+                    if (data.rows[0]) {
+                        resolve(data.rows[0]);
+                    } else {
+                        resolve(null);
+                    }
+                }
+            });
+        });
+    } catch (error) {
+        return null;
+    }
+};
 
 const Login = async (req, res) => {
     try {
@@ -83,7 +106,52 @@ const Login = async (req, res) => {
     }
 }
 
+const setPassword = async (req, res) => {
+    try {
+        const {user_id} = req.params
+        const {password, repeat_password} = req.body
+        getUserById(user_id)
+            .then(user => {
+                if (user) {
+                    if (password === repeat_password) {
+                        client.query("update users set user_password = $1 where user_id = $2;", [cipherPassword(password), user_id], (error, data) => {
+                            if (error) {
+                                res.status(404).json({
+                                    message: "Error on set password!",
+                                    error: error.message,
+                                })
+                            }
+                            else {
+                                res.status(200).json({
+                                    message: "Set password successfully!",
+                                    error: null
+                                })
+                            }
+                        })
+                    }
+                    else {
+                        res.status(200).json({
+                            message: "Error to set password, the passwords are diferents!",
+                            error: null
+                        })
+                    }
+                } else {
+                    res.status(500).json({
+                        message: "User not found!",
+                        error: null
+                    })
+                }
+            })
+
+    } catch (error) {
+        res.status(500).json({
+            message: "Failed",
+            error: error.message
+        })
+    }
+}
 
 export {
-    Login
+    Login,
+    setPassword
 }
