@@ -14,7 +14,9 @@ const Login = async (req, res) => {
                 if (data.rows[0] === undefined) {
                     res.status(404).json({
                         message: "User email or password are incorrect!",
-                        user: null
+                        error: null,
+                        user: null,
+                        token: null
                     });
                 }
                 else {
@@ -60,6 +62,8 @@ const Login = async (req, res) => {
                         else {
                             res.status(200).json({
                                 error: null,
+                                user: data.rows[0],
+                                token: null,
                                 message: "User email or password are incorrect!"
                             });
                         }
@@ -69,6 +73,8 @@ const Login = async (req, res) => {
 
                         res.status(200).json({
                             error: null,
+                            user: null,
+                            token: null,
                             message: "User was register, but you haven't password yet, you would enter with microdoft authentification and update you password!"
                         });
                     }
