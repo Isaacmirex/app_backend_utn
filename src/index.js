@@ -16,6 +16,7 @@ import {auditingRouter} from "./routes/auditing.js";
 import "./middlewares/microsoft.js";
 import {authorize} from "./middlewares/verifyAccess.js";
 import {swaggerDocs as V1SwaggerDocs} from "./routes/swagger.js";
+import {router} from './routes/login.routes.js'
 
 const port = process.env.PORT || 3000;
 
@@ -48,6 +49,7 @@ app.get('/', (req, res) => {
 //swagger
 V1SwaggerDocs(app, port);
 
+app.use('/auth', router)
 app.use('/utnbackend/v1/users', usersRouter);
 app.use('/utnbackend/v1/roles', rolesRouter);
 app.use('/utnbackend/v1/modules', modulesRouter);
