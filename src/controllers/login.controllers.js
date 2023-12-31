@@ -62,7 +62,7 @@ const Login = async (req, res) => {
                         else {
                             res.status(200).json({
                                 error: null,
-                                user: data.rows[0],
+                                user: null,
                                 token: null,
                                 message: "User email or password are incorrect!"
                             });
