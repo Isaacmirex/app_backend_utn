@@ -49,7 +49,7 @@ app.get('/', (req, res) => {
 //swagger
 V1SwaggerDocs(app, port);
 
-app.use('/auth', router)
+app.use('/utnbackend/v1/login', router)
 app.use('/utnbackend/v1/users', usersRouter);
 app.use('/utnbackend/v1/roles', rolesRouter);
 app.use('/utnbackend/v1/modules', modulesRouter);

@@ -1,5 +1,5 @@
-import { Router } from 'express';
-import { createUser, getUsers, getUsersByID, updateUser, updateUser_State } from '../controllers/usersController.js';
+import {Router} from 'express';
+import {createUser, getUsers, getUsersByID, updateUser, updateUser_State} from '../controllers/usersController.js';
 
 const usersRouter = Router();
 //Routes Users:
@@ -204,4 +204,4 @@ usersRouter.put('/:id', updateUser);
 
 usersRouter.put('/:id', updateUser_State);
 
-export { usersRouter };
+export {usersRouter};
