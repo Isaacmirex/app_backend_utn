@@ -44,19 +44,13 @@ const Login = async (req, res) => {
                                 user_state: data.rows[0].user_state,
                                 user_date_register: data.rows[0].user_date_register
                             }, 'secret');
-                            const serialize_token = serialize('myToken', token, {
-                                httpOnly: true,
-                                secure: false,
-                                sameSite: 'strict',
-                                maxAge: 3600000,
-                                path: '/'
-                            })
-                            res.setHeader('Set-Cookie', serialize_token)
+
+                            res.setHeader('Set-Cookie', token)
                             res.status(200).json({
                                 error: null,
                                 user: data.rows[0],
                                 message: "Login successfully!",
-                                token: serialize_token
+                                token: token
                             });
                         }
                         else {

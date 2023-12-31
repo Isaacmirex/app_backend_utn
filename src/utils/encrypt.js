@@ -24,7 +24,7 @@ function ComparePasswords (text, cipher) {
         return false
     }
 }
-
+console.log(cipherPassword("12345"))
 export {
     cipherPassword,
     decryptPassword, ComparePasswords
