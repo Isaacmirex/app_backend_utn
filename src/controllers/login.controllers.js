@@ -153,5 +153,5 @@ const setPassword = async (req, res) => {
 
 export {
     Login,
-    setPassword
+    setPassword, getUserById
 }

@@ -17,7 +17,7 @@ import "./middlewares/microsoft.js";
 import {authorize} from "./middlewares/verifyAccess.js";
 import {swaggerDocs as V1SwaggerDocs} from "./routes/swagger.js";
 import {router} from './routes/login.routes.js'
-
+import { getmRouter } from "./routes/getmodules.routes.js";
 const port = process.env.PORT || 3000;
 
 const app = express();
@@ -49,6 +49,7 @@ app.get('/', (req, res) => {
 //swagger
 V1SwaggerDocs(app, port);
 
+app.use('/utnbackend/v1/mario', getmRouter)
 app.use('/utnbackend/v1/login', router)
 app.use('/utnbackend/v1/users', usersRouter);
 app.use('/utnbackend/v1/roles', rolesRouter);

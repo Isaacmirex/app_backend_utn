@@ -9,7 +9,7 @@ const options = {
     },
     apis: ['src/routes/users.js', 'src/routes/modules.js', 'src/routes/roles.js', 'src/routes/assignments_modules.js',
         'src/routes/events.js', 'src/routes/assignments_events.js', 'src/routes/classroom.js',
-        'src/routes/assignments_class.js', 'src/routes/class_score.js', 'src/routes/auditing.js', 'src/routes/login.routes.js', 'database.js'],
+        'src/routes/assignments_class.js', 'src/routes/class_score.js', 'src/routes/auditing.js', 'src/routes/login.routes.js', 'src/routes/getmodules.routes.js', 'database.js'],
 };
 
 const swaggerSpecs = swaggerJSDoc(options);
