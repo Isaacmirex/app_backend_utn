@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { getAssignmentsClass, getAssignmentsClassById, createAssignmentsClass, 
             updateAssignmentsClass } from '../controllers/assignments_class.controller.js';
+import { verifyToken } from '../middlewares/auth.jwt.js';
 
 const assignments_classRouter = Router();
 //Routes AssignmentsClass
@@ -26,7 +27,7 @@ const assignments_classRouter = Router();
  *                   items: 
  *                     type: object
  */
-assignments_classRouter.get('/', getAssignmentsClass);
+assignments_classRouter.get('/',verifyToken,getAssignmentsClass);
 /**
  * @openapi
  * /utnbackend/v1/assignments_class/{id}:
@@ -57,7 +58,7 @@ assignments_classRouter.get('/', getAssignmentsClass);
  *                     type: object
  * 
  */
-assignments_classRouter.get('/:id', getAssignmentsClassById);
+assignments_classRouter.get('/:id',verifyToken, getAssignmentsClassById);
 /**
  * @openapi
  * /utnbackend/v1/assignments_class:
@@ -115,7 +116,7 @@ assignments_classRouter.get('/:id', getAssignmentsClassById);
  *                           type: boolean
  *                           example: true
  */
-assignments_classRouter.post('/', createAssignmentsClass);
+assignments_classRouter.post('/', verifyToken, createAssignmentsClass);
 /**
  * @openapi
  * /utnbackend/v1/assignments_class:
@@ -174,6 +175,6 @@ assignments_classRouter.post('/', createAssignmentsClass);
  *                       type: boolean
  *                       example: true
  */
-assignments_classRouter.put('/', updateAssignmentsClass);
+assignments_classRouter.put('/', verifyToken, updateAssignmentsClass);
 
 export { assignments_classRouter };

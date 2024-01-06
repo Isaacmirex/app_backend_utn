@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getAssigmentEvents, getAssigmentEventsById, createAssigmentEvent, 
             updateAssigmentEvent, deleteAssigmentEvent } from '../controllers/assignments_events.controller.js';
-
+import { verifyToken } from '../middlewares/auth.jwt.js';
 const assignments_eventsRouter = Router();
 //Routes assigment_events
 /**
@@ -26,7 +26,7 @@ const assignments_eventsRouter = Router();
  *                   items: 
  *                     type: object
  */
-assignments_eventsRouter.get('/',getAssigmentEvents);
+assignments_eventsRouter.get('/',verifyToken,getAssigmentEvents);
 
 /**
  * @openapi
@@ -74,7 +74,7 @@ assignments_eventsRouter.get('/',getAssigmentEvents);
  *                   example: Assignment event not found
  */
 
-assignments_eventsRouter.get('/:id',getAssigmentEventsById);
+assignments_eventsRouter.get('/:id',verifyToken,getAssigmentEventsById);
 
 /**
  * @openapi
@@ -130,7 +130,7 @@ assignments_eventsRouter.get('/:id',getAssigmentEventsById);
  *                     
  */
 
-assignments_eventsRouter.post('/', createAssigmentEvent);
+assignments_eventsRouter.post('/',verifyToken, createAssigmentEvent);
 /**
  * @openapi
  * /utnbackend/v1/assignments_events:
@@ -195,7 +195,7 @@ assignments_eventsRouter.post('/', createAssigmentEvent);
  *                   example: Assignment event not found
  */
 
-assignments_eventsRouter.put('/',updateAssigmentEvent);
+assignments_eventsRouter.put('/',verifyToken,updateAssigmentEvent);
 
 /**
  * @openapi
@@ -242,6 +242,6 @@ assignments_eventsRouter.put('/',updateAssigmentEvent);
  *                   example: Assignment event not found
  */
 
-assignments_eventsRouter.delete('/:id',deleteAssigmentEvent);
+assignments_eventsRouter.delete('/:id',verifyToken,deleteAssigmentEvent);
 
 export { assignments_eventsRouter };

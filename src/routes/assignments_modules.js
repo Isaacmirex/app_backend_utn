@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { getAssignmentsModules, getAssignmentsModulesByID, getAssignmentsModulesByUserID,
         createAssignmentsModules, deleteAssignmentsModulesByID } from '../controllers/assignments_modules.controller.js';
-
+import { verifyToken } from '../middlewares/auth.jwt.js';
 const assignments_modulesRouter = Router();
 
 // Ruta protegida que requiere el rol "Usuarios"
@@ -28,7 +28,7 @@ const assignments_modulesRouter = Router();
  *                   items: 
  *                     type: object
  */
-assignments_modulesRouter.get('/', getAssignmentsModules);
+assignments_modulesRouter.get('/',verifyToken, getAssignmentsModules);
 /**
  * @openapi
  * /utnbackend/v1/assignments_modules/{id}:
@@ -58,7 +58,7 @@ assignments_modulesRouter.get('/', getAssignmentsModules);
  *                   items: 
  *                     type: object
  */
-assignments_modulesRouter.get('/:id', getAssignmentsModulesByID);
+assignments_modulesRouter.get('/:id',verifyToken, getAssignmentsModulesByID);
 /**
  * @openapi
  * /utnbackend/v1/assignments_modules/users/{id}:
@@ -88,7 +88,7 @@ assignments_modulesRouter.get('/:id', getAssignmentsModulesByID);
  *                   items: 
  *                     type: object
  */
-assignments_modulesRouter.get('/users/:id', getAssignmentsModulesByUserID);
+assignments_modulesRouter.get('/users/:id',verifyToken, getAssignmentsModulesByUserID);
 /**
  * @openapi
  * /utnbackend/v1/assignments_modules:
@@ -142,7 +142,7 @@ assignments_modulesRouter.get('/users/:id', getAssignmentsModulesByUserID);
  *                       type: integer
  *                       example: 1
  */
-assignments_modulesRouter.post('/', createAssignmentsModules);
+assignments_modulesRouter.post('/',verifyToken, createAssignmentsModules);
 /*assignments_modulesRouter.put('/:id', updateModule_Sate);*/
 /**
  * @openapi
@@ -187,6 +187,6 @@ assignments_modulesRouter.post('/', createAssignmentsModules);
  *                   type: string
  *                   example: Assignment module not found
  */
-assignments_modulesRouter.delete('/:id', deleteAssignmentsModulesByID);
+assignments_modulesRouter.delete('/:id',verifyToken, deleteAssignmentsModulesByID);
 
 export { assignments_modulesRouter };

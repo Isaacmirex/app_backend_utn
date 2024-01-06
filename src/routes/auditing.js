@@ -1,6 +1,6 @@
 import { Router } from 'express';
 import { getAuditing, getAuditingById } from '../controllers/auditing.controller.js';
-
+import { verifyToken } from '../middlewares/auth.jwt.js';
 const auditingRouter = Router();
 /**
  * @openapi
@@ -24,7 +24,7 @@ const auditingRouter = Router();
  *                   items: 
  *                     type: object
  */
-auditingRouter.get('/', getAuditing);
+auditingRouter.get('/',verifyToken, getAuditing);
 /**
  * @openapi
  * /utnbackend/v1/auditing/{id}:
@@ -55,6 +55,6 @@ auditingRouter.get('/', getAuditing);
  *                     type: object
  * 
  */
-auditingRouter.get('/:id', getAuditingById);
+auditingRouter.get('/:id', verifyToken, getAuditingById);
 
 export { auditingRouter };

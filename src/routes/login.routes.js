@@ -1,5 +1,7 @@
 import {Router} from 'express';
+import { verifyToken } from '../middlewares/auth.jwt.js';
 const router = Router();
+
 
 import {Login, setPassword} from '../controllers/login.controllers.js';
 
@@ -115,6 +117,6 @@ router.post('/', Login);
  *                   type: string
  *                   example: User not found
  */
-router.put('/:user_id', setPassword);
+router.put('/:user_id',verifyToken, setPassword);
 
 export {router};

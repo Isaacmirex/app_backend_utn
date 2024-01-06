@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getRoles, getRolesByID, createRol, updateRol_Sate } from '../controllers/rolesController.js';
+import { verifyToken } from '../middlewares/auth.jwt.js';
 
 const rolesRouter = Router();
 
@@ -27,7 +28,7 @@ const rolesRouter = Router();
  *                   items: 
  *                     type: object
  */
-rolesRouter.get('/', getRoles);
+rolesRouter.get('/',verifyToken, getRoles);
 /**
  * @openapi
  * /utnbackend/v1/roles/{id}:
@@ -57,7 +58,7 @@ rolesRouter.get('/', getRoles);
  *                   items: 
  *                     type: object
  */
-rolesRouter.get('/:id', getRolesByID);
+rolesRouter.get('/:id',verifyToken, getRolesByID);
 /**
  * @openapi
  * /utnbackend/v1/roles:
@@ -104,7 +105,7 @@ rolesRouter.get('/:id', getRolesByID);
  *                       type: boolean
  *                       example: true
  */
-rolesRouter.post('/', createRol);
+rolesRouter.post('/',verifyToken, createRol);
 /**
  * @openapi
  * /utnbackend/v1/roles/{id}:
@@ -167,6 +168,6 @@ rolesRouter.post('/', createRol);
  *                   type: string
  *                   example: Role not found
  */
-rolesRouter.put('/:id', updateRol_Sate);
+rolesRouter.put('/:id',verifyToken, updateRol_Sate);
 
 export { rolesRouter };

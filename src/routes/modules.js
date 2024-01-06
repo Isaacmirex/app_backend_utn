@@ -1,5 +1,7 @@
 import { Router } from 'express';
 import { getModules, getModulesByID, createModule, updateModule_Sate } from '../controllers/modulesController.js';
+import { verifyToken } from '../middlewares/auth.jwt.js';
+
 const modulesRouter = Router();
 
 // Ruta protegida que requiere el rol "Usuarios"
@@ -26,7 +28,7 @@ const modulesRouter = Router();
  *                   items: 
  *                     type: object
  */
-modulesRouter.get('/', getModules);
+modulesRouter.get('/',verifyToken, getModules);
 /**
  * @openapi
  * /utnbackend/v1/modules/{id}:
@@ -57,7 +59,7 @@ modulesRouter.get('/', getModules);
  *                     type: object
  * 
  */
-modulesRouter.get('/:id', getModulesByID);
+modulesRouter.get('/:id',verifyToken, getModulesByID);
 /**
  * @openapi
  * /utnbackend/v1/modules:
@@ -104,7 +106,7 @@ modulesRouter.get('/:id', getModulesByID);
  *                  type: boolean
  *                  example: true  
  */
-modulesRouter.post('/', createModule);
+modulesRouter.post('/',verifyToken, createModule);
 /**
  * @openapi
  * /utnbackend/v1/modules/{id}:
@@ -169,6 +171,6 @@ modulesRouter.post('/', createModule);
  *                   type: string
  *                   example: Module not found
  */
-modulesRouter.put('/:id', updateModule_Sate);
+modulesRouter.put('/:id',verifyToken, updateModule_Sate);
 
 export { modulesRouter };

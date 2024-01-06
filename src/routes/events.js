@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getEvents, getEventsById, createEvent, updateEvent  } from '../controllers/events.controller.js';
+import { verifyToken } from '../middlewares/auth.jwt.js';
 
 const eventsRouter = Router();
 
@@ -26,7 +27,7 @@ const eventsRouter = Router();
  *                   items: 
  *                     type: object
  */
-eventsRouter.get('/',getEvents);
+eventsRouter.get('/',verifyToken,getEvents);
 /**
  * @openapi
  * /utnbackend/v1/events/{id}:
@@ -57,7 +58,7 @@ eventsRouter.get('/',getEvents);
  *                     type: object
  * 
  */
-eventsRouter.get('/:id',getEventsById);
+eventsRouter.get('/:id',verifyToken,getEventsById);
 /**
  * @openapi
  * /utnbackend/v1/events:
@@ -128,7 +129,7 @@ eventsRouter.get('/:id',getEventsById);
  *                       example: true
  */
 
-eventsRouter.post('/',createEvent);
+eventsRouter.post('/',verifyToken,createEvent);
 /**
  * @openapi
  * /utnbackend/v1/events:
@@ -211,6 +212,6 @@ eventsRouter.post('/',createEvent);
  *                   example: Event not found
  */
 
-eventsRouter.put('/',updateEvent);
+eventsRouter.put('/',verifyToken,updateEvent);
 
 export { eventsRouter };

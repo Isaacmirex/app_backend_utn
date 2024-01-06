@@ -1,5 +1,6 @@
 import {Router} from 'express';
 import {createUser, getUsers, getUsersByID, updateUser, updateUser_State} from '../controllers/usersController.js';
+import { verifyToken } from '../middlewares/auth.jwt.js';
 
 const usersRouter = Router();
 //Routes Users:
@@ -25,7 +26,7 @@ const usersRouter = Router();
  *                   items: 
  *                     type: object
  */
-usersRouter.get('/', getUsers);
+usersRouter.get('/',verifyToken, getUsers);
 /**
  * @openapi
  * /utnbackend/v1/users/{id}:
@@ -56,7 +57,7 @@ usersRouter.get('/', getUsers);
  *                     type: object
  * 
  */
-usersRouter.get('/:id', getUsersByID);
+usersRouter.get('/:id',verifyToken, getUsersByID);
 /**
  * @openapi
  * /utnbackend/v1/users:
@@ -123,7 +124,7 @@ usersRouter.get('/:id', getUsersByID);
  *                 type: string
  *                 example: 0985632659
  */
-usersRouter.post('/', createUser);
+usersRouter.post('/',verifyToken, createUser);
 /**
  * @openapi
  * /utnbackend/v1/users/{id}:
@@ -200,8 +201,8 @@ usersRouter.post('/', createUser);
  *                   type: string
  *                   example: User not found
  */
-usersRouter.put('/:id', updateUser);
+usersRouter.put('/:id',verifyToken, verifyToken, updateUser);
 
-usersRouter.put('/:id', updateUser_State);
+usersRouter.put('/:id',verifyToken, updateUser_State);
 
 export {usersRouter};

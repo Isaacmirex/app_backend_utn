@@ -1,6 +1,8 @@
 import { client } from "../database/database.js";
 
+
 const getAssignmentsModules = async (req, res) => {
+  
   const { id, rol } = req.body;
   try {
     const user = await client.query(

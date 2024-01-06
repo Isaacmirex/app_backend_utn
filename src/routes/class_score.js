@@ -1,6 +1,7 @@
 import { Router } from 'express';
 import { getClassScore, getClassScoreById, createClassScore, 
             updateClassScore } from '../controllers/class_score.controller.js';
+            import { verifyToken } from '../middlewares/auth.jwt.js';
 
 const class_scoreRouter = Router();
 
@@ -27,7 +28,7 @@ const class_scoreRouter = Router();
  *                   items: 
  *                     type: object
  */
-class_scoreRouter.get('/', getClassScore);
+class_scoreRouter.get('/',verifyToken, getClassScore);
 /**
  * @openapi
  * /utnbackend/v1/class_score/{id}:
@@ -58,7 +59,7 @@ class_scoreRouter.get('/', getClassScore);
  *                     type: object
  * 
  */
-class_scoreRouter.get('/:id', getClassScoreById);
+class_scoreRouter.get('/:id',verifyToken, getClassScoreById);
 /**
  * @openapi
  * /utnbackend/v1/class_score:
@@ -151,7 +152,7 @@ class_scoreRouter.get('/:id', getClassScoreById);
  *                           type: number
  *                           example: 95.2
  */
-class_scoreRouter.post('/', createClassScore);
+class_scoreRouter.post('/',verifyToken, createClassScore);
 /**
  * @openapi
  * /utnbackend/v1/class_score:
@@ -248,6 +249,6 @@ class_scoreRouter.post('/', createClassScore);
  *                           type: number
  *                           example: 96.5
  */
-class_scoreRouter.put('/', updateClassScore);
+class_scoreRouter.put('/',verifyToken, updateClassScore);
 
 export { class_scoreRouter };

@@ -1,5 +1,6 @@
 import { Router } from 'express';
 import { getClassroom, getClassroomById, creatClassroom, updateClassroom } from '../controllers/classroom.controller.js';
+import { verifyToken } from '../middlewares/auth.jwt.js';
 
 const classroomRouter = Router();
 //Routes Classrooms
@@ -25,7 +26,7 @@ const classroomRouter = Router();
  *                   items: 
  *                     type: object
  */
-classroomRouter.get('/', getClassroom);
+classroomRouter.get('/',verifyToken, getClassroom);
 /**
  * @openapi
  * /utnbackend/v1/classroom/{id}:
@@ -56,7 +57,7 @@ classroomRouter.get('/', getClassroom);
  *                     type: object
  * 
  */
-classroomRouter.get('/:id', getClassroomById);
+classroomRouter.get('/:id',verifyToken, getClassroomById);
 /**
  * @openapi
  * /utnbackend/v1/classroom:
@@ -122,7 +123,7 @@ classroomRouter.get('/:id', getClassroomById);
  *                       type: boolean
  *                       example: false
  */
-classroomRouter.post('/', creatClassroom);
+classroomRouter.post('/',verifyToken, verifyToken, creatClassroom);
 /**
  * @openapi
  * /utnbackend/v1/classroom:
@@ -192,6 +193,6 @@ classroomRouter.post('/', creatClassroom);
  *                       type: boolean
  *                       example: false
  */
-classroomRouter.put('/', updateClassroom);
+classroomRouter.put('/',verifyToken, updateClassroom);
 
 export { classroomRouter };
